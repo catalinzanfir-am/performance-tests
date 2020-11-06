@@ -1,0 +1,6 @@
+.idea/
+target/
+*.iml
+*.log
+hsperfdata_root/*
+project/*
