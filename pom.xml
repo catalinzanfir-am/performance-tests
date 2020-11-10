@@ -38,23 +38,23 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>io.gatling</groupId>
-        <artifactId>gatling-maven-plugin</artifactId>
-        <version>${gatling-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <phase>test</phase>
-            <goals><goal>test</goal></goals>
-            <configuration>
-              <disableCompiler>false</disableCompiler>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+  <!--<build>-->
+    <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
+    <!--<plugins>-->
+      <!--<plugin>-->
+        <!--<groupId>io.gatling</groupId>-->
+        <!--<artifactId>gatling-maven-plugin</artifactId>-->
+        <!--<version>${gatling-maven-plugin.version}</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<phase>test</phase>-->
+            <!--<goals><goal>test</goal></goals>-->
+            <!--<configuration>-->
+              <!--<disableCompiler>false</disableCompiler>-->
+            <!--</configuration>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+    <!--</plugins>-->
+  <!--</build>-->
 </project>
