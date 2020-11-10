@@ -19,6 +19,7 @@ node {
     }
 
     stage ("Run tests") {
+           def cwd = pwd()
         sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim"
 
     }
