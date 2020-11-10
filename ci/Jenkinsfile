@@ -6,22 +6,21 @@ import groovy.json.*
 
 node {
 
-    stage ("Get app"){
-        checkout scm
+    stage ("get app")
+    {
+    checkout scm
     }
 
-    stage ("Get mvn image") {
-        def dockerImage = getDockerImage()
-        def cwd = pwd()
+    stage ("Compile application") {
 
-        executeInContainer(dockerImage, cwd, {
-            stage ("Compile application") {
-                sh "mvn clean compile -Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
-            }
-            stage ("Run tests") {
-                sh "mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim"
-            }
-        })
+       def cwd = pwd()
+
+       sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install gatling:test -Dgatling.simulationClass=Simulations.TestSim -Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
+    }
+
+    stage ("Run tests") {
+       // sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim"
+
     }
 
     stage("publish results") {
@@ -32,18 +31,6 @@ node {
     }
 }
 
-def getDockerImage(){
-    def dockerImage = docker.image("romicaraicu/gatling-docker:latest ")
-    dockerImage.pull()
-
-    return dockerImage
-}
-
-def executeInContainer(dockerImage, workingDirectory, callback) {
-  dockerImage.inside("-v ${workingDirectory}:/tmp -w /tmp") {
-    callback()
-  }
-}
 
 
 def info(String message){
