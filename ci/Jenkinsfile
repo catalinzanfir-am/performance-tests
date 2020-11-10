@@ -15,7 +15,7 @@ node {
 
        def cwd = pwd()
 
-       sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+       sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
     }
 
     stage ("Run tests") {
