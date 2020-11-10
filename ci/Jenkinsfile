@@ -6,11 +6,14 @@ import groovy.json.*
 
 node {
     stage ("Compile application") {
-       sh 'docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error"'
+
+       def cwd = pwd()
+       # sh 'docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error"'
+       sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error'
     }
 
     stage ("Run tests") {
-        sh 'docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim "'
+        sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim"
 
     }
 
