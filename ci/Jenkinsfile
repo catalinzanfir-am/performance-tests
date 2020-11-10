@@ -14,11 +14,16 @@ node {
     stage ("Compile application") {
 
        def cwd = pwd()
+        String dockerRunCmd = "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean compile"
+        String mvnArgs = "-Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
+        String gatlingTest = "gatling:test -Dgatling.simulationClass=Simulations.TestSim"
+        String testParams = ""
 
-       sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install gatling:test -Dgatling.simulationClass=Simulations.TestSim -Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
+        sh "${dockerRunCmd} ${gatlingTest} ${testParams} ${mvnArgs}"
     }
 
     stage ("Run tests") {
+
        // sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim"
 
     }
