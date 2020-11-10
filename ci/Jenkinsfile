@@ -5,16 +5,13 @@ import hudson.tasks.junit.CaseResult
 import groovy.json.*
 
 node {
-
-    stage ("Get docker image") {
-	    info("get docker image")
-    }
-
     stage ("Compile application") {
-
+        docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error"
     }
 
     stage ("Run tests") {
+    docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn gatling:test -Dgatling.simulationClass=Simulations.TestSim "
+
     }
 
     stage("publish results") {
