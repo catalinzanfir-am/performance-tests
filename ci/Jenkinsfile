@@ -8,7 +8,7 @@ node {
     stage ("Compile application") {
 
        def cwd = pwd()
-       # sh 'docker run -i -v "$(pwd)":/tmp -w "/tmp" romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error"'
+
        sh "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean install -Dorg.slf4j.simpleLogger.defaultLogLevel=error'
     }
 
