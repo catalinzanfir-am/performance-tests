@@ -5,6 +5,12 @@ import hudson.tasks.junit.CaseResult
 import groovy.json.*
 
 node {
+
+    stage ("get app")
+    {
+    checkout scm
+    }
+
     stage ("Compile application") {
 
        def cwd = pwd()
