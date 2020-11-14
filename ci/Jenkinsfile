@@ -9,17 +9,20 @@ node {
     stage ("get app")
     {
     checkout scm
+
+    println(getModel)
+    println(getParams)
     }
 
     stage ("Compile application") {
 
-       def cwd = pwd()
-        String dockerRunCmd = "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean compile"
-        String mvnArgs = "-Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
-        String gatlingTest = "gatling:test -Dgatling.simulationClass=Simulations.TestSim"
-        String testParams = ""
+//      def cwd = pwd()
+//       String dockerRunCmd = "docker run -i -v ${cwd}:/tmp -w /tmp romicaraicu/gatling-docker:latest mvn clean compile"
+//       String mvnArgs = "-Dorg.slf4j.simpleLogger.defaultLogLevel=error -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -DskipTests"
+//       String gatlingTest = "gatling:test -Dgatling.simulationClass=Simulations.TestSim"
+//       String testParams = ""
 
-        sh "${dockerRunCmd} ${gatlingTest} ${testParams} ${mvnArgs}"
+//       sh "${dockerRunCmd} ${gatlingTest} ${testParams} ${mvnArgs}"
     }
 
     stage ("Run tests") {
@@ -36,10 +39,10 @@ node {
     }
 }
 
+def getModel(){
+    return env.MODEL;
+}
 
-
-def info(String message){
-    ansiColor('xterm') {
-        echo "\u001b[1m\u001b[36m[ INFO:  ]\u001b[0m " + message
-    }
+def getModelParams(){
+    return env.PARAMS
 }
